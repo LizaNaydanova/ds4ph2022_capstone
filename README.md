@@ -1,10 +1,12 @@
 # ds4ph2022_capstone
 Capstone project
-Possible data links
-https://www.kaggle.com/datasets/babyoda/depression-in-married-couples
+
+Data link:
 https://www.kaggle.com/datasets/michaelacorley/unemployment-and-mental-illness-survey
-https://www.kaggle.com/datasets/hellenandreea/survey-mental-health-2016?resource=download
-https://www.kaggle.com/datasets/jeremyteo/full-data-predicting-depression
+
+Unemployment and mental illness survey
+The purpose of the data collection was to explore the linkage of unemployment and mental health. The data was collected by NAMI via SurveyMonkey
+
 
 Prediction column (y)
 I identify with having a mental illness (2nd column)
