@@ -13,10 +13,35 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix,precision_score,recall_score,accuracy_score
 
 
+df = pd.read_csv("https://raw.githubusercontent.com/LizaNaydanova/ds4ph2022_capstone/main/data_new.csv")
+
+def train_model():
+        df = pd.read_csv("https://raw.githubusercontent.com/LizaNaydanova/ds4ph2022_capstone/main/data_new.csv")
+    
+        df = df.iloc[: , 1:]
+    
+        y = df.mental_illness
+        X = df.drop(columns = ['mental_illness'])
+    
+        # Standardize data
+        ss = StandardScaler()
+        X = ss.fit_transform(X)
+    
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        lr=LogisticRegression()
+        lr.fit(X_train,y_train)
+    
+        return lr
+
+
+
+    
+    
 #bs = 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SOLAR])
 
 #To change theme, change "UNITED" to any option from this website: https://bootswatch.com/united/
+
 app.layout = html.Div([
     html.H1("Can we predict mental illness from demographic data and a additional questions? Enter your answers to see the the chances you have a mental illness", style={'font-size': '40px'}),
     html.Div([
@@ -78,32 +103,17 @@ app.layout = html.Div([
     Input(component_id  = 'reading'   , component_property = 'value')
 )
 def update_output_div(age, gender, region, education, employment, income, resume_gaps, disability, parents, reading):
-    d = {'age': age, 'gender': gender, 'region':region, 'education':education, 'employment': employment, 'income':income, 'resume_gaps':resume_gaps, 'disability':disability, 'parents':parents, 'reading':reading}
+    d = {'age': [age], 'gender': [gender], 'region':[region], 'education':[education],'employment': employment, 'income':[income], 'resume_gaps':[resume_gaps], 'disability':[disability], 'parents':[parents], 'reading':[reading]}
     df = pd.DataFrame(data=d)
     ss = StandardScaler()
     X = ss.fit_transform(df)
     lr = train_model()
     y_pred=lr.predict(X)
-    return(age, ' ', gender,' ', region, ' ', education, ' ', income,' ', resume_gaps,' ', disability,' ', parents,' ', reading, ' ', y_pred)
-
-def train_model():
-    
-    df = pd.read_csv("data_new.csv")
-    
-    df = df.iloc[: , 1:]
-    
-    y = df.mental_illness
-    X = df.drop(columns = ['mental_illness'])
-    
-    # Standardize data
-    ss = StandardScaler()
-    X = ss.fit_transform(X)
-    
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    lr=LogisticRegression()
-    lr.fit(X_train,y_train)
-    
-    return lr
+    if y_pred == 0:
+        return('We predict you do not have a mental illness')
+    else:
+        return('We predict you do have a mental illness')
+    #return(age, ' ', gender,' ', region, ' ', education, ' ', income,' ', resume_gaps,' ', disability,' ', parents,' ', reading)
 
 
 
