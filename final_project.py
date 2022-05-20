@@ -43,7 +43,7 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SOLAR])
 #To change theme, change "UNITED" to any option from this website: https://bootswatch.com/united/
 
 app.layout = html.Div([
-    html.H1("Can we predict mental illness from demographic data and a additional questions? Enter your answers to see the the chances you have a mental illness", style={'font-size': '40px'}),
+    html.H1("Can we predict mental illness from demographic data and a additional questions? Enter your answers to see our prediction", style={'font-size': '40px'}),
     html.Div([
         html.H2('Enter your age', style={'font-size': '20px'}),
         dcc.Input(id = 'age', value = 20, type = 'number',style={'backgroundColor': 
@@ -81,7 +81,7 @@ app.layout = html.Div([
         
     ]),
     html.Br(),
-    html.H1("Based on your answers, your predicted chances of having a mental illness are: ", style={'font-size': '40px'}),
+    html.H1("Based on your answers: ", style={'font-size': '40px'}),
     html.H1(id = 'chances'),
 
 ])
